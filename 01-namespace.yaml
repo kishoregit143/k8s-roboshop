@@ -5,5 +5,5 @@ metadata:
   labels:
     environment: development
     project: Roboshop
-    version: 1.0
+    version: ve1
     author: kishore
