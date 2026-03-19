@@ -12,8 +12,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql
-  namespace: roboshop  # we must give name space otherwaise it go into default namespace.
-
+  namespace: roboshop
+  # these are replica set labels
   labels:
     project: roboshop
     component: mysql
@@ -36,26 +36,26 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: kishorelinux/mysql:v1 
+        image: kishorelinux/mysql:v1
         imagePullPolicy: Always
-        readinessProbe:
-          tcpSocket:
-            port: 3306
-          initialDelaySeconds: 10
-          periodSeconds: 10
-        livenessProbe:
-          tcpSocket:
-            port: 3306
-          initialDelaySeconds: 20
-          periodSeconds: 5
-          volumeMounts:
-          - name: mysql-config
-            mountPath: /etc/mysql/conf.d/my.cnf
-            subPath: my.cnf
+        # readinessProbe:
+        #   tcpSocket:
+        #     port: 3306
+        #   initialDelaySeconds: 10
+        #   periodSeconds: 10
+        # livenessProbe:
+        #   tcpSocket:
+        #     port: 3306
+        #   initialDelaySeconds: 20
+        #   periodSeconds: 5
+        volumeMounts:
+        - name: mysql-config
+          mountPath: /etc/mysql/conf.d/my.cnf
+          subPath: my.cnf
 
-        volumes:
-          - name: mysql-config
-            configMap:
+      volumes:
+        - name: mysql-config
+          configMap:
             name: mysql
 ---
 apiVersion: v1
@@ -71,4 +71,4 @@ spec:
   ports:
     - protocol: TCP
       port: 3306 # service port
-      targetPort: 3306 # container port          
+      targetPort: 3306 # container port
