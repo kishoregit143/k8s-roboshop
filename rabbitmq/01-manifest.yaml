@@ -27,6 +27,11 @@ spec:
       containers:
       - name: rabbitmq
         image: rabbitmq:3
+        env:
+        - name: RABBITMQ_DEFAULT_USER
+          value: roboshop
+        - name: RABBITMQ_DEFAULT_PASS
+          value: roboshop123
         imagePullPolicy: Always
         readinessProbe:
           tcpSocket:
@@ -36,7 +41,7 @@ spec:
         livenessProbe:
           tcpSocket:
             port: 5672
-          initialDelaySeconds: 5
+          initialDelaySeconds: 20
           periodSeconds: 5
 ---
 apiVersion: v1
